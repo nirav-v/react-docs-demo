@@ -1,37 +1,55 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square" 
-      onClick={()=>{
-        this.props.onClick();
-      }}>
-        {this.props.value}
-      </button>
-    );
-  }
+// class Square extends React.Component {
+//   render() {
+//     return (
+//       <button className="square"
+//       onClick={()=>{
+//         this.props.onClick();
+//       }}>
+//         {this.props.value}
+//       </button>
+//     );
+//   }
+// }
+
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            squares: Array(9).fill(null),
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice(); //this just makes a copy of the squares array
+    squares[i] = "X";
+    this.setState({ squares: squares });
+  }
+
   renderSquare(i) {
-    return <Square 
-    value={this.state.squares[i]}
-    onClick={()=>{
-        this.handleClick(i)
-    }} />;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => {
+          this.handleClick(i);
+        }}
+      />
+    );
   }
 
   render() {
-    const status = 'Next player: X';
+    const status = "Next player: X";
 
     return (
       <div>
